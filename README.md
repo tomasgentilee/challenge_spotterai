@@ -20,7 +20,7 @@ Una API REST de alto rendimiento construida con **Django** que calcula rutas óp
 
 Este proyecto resuelve eficientemente el problema **“Point-to-Curve Distance”**.
 
-### 🔧 Procesos Internos
+### Procesos Internos
 
 - **Carga de Datos:** Al iniciar el servidor, miles de estaciones se cargan en un BallTree para consultas rápidas por radio.
 - **Proyección Vectorizada:**  
@@ -30,7 +30,7 @@ Este proyecto resuelve eficientemente el problema **“Point-to-Curve Distance�
 
 ---
 
-## 📋 Requisitos
+## Requisitos
 
 - Python **3.8+**
 - **OpenRouteService API Key** (el plan gratuito funciona)
@@ -40,7 +40,7 @@ Este proyecto resuelve eficientemente el problema **“Point-to-Curve Distance�
 
 ---
 
-## ⚙️ Instalación
+## Instalación
 
 ```bash
 # Clonar el repositorio
@@ -58,7 +58,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 🔑 Variables de Entorno
+### Variables de Entorno
 
 Crear un archivo **.env** en la raíz del proyecto:
 
@@ -70,7 +70,7 @@ SECRET_KEY=your_django_secret_key
 
 ---
 
-## 📦 Dataset
+## Dataset
 
 Asegurarse de que el dataset esté ubicado en:
 
@@ -78,7 +78,7 @@ Asegurarse de que el dataset esté ubicado en:
 
 ---
 
-## ▶️ Ejecutar el Servidor
+## Ejecutar el Servidor
 
 Iniciar el servidor Django:
 
