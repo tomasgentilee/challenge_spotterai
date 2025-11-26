@@ -1,83 +1,141 @@
-Fuel Route Optimizer API 
-🚛⛽A high-performance Django REST API that calculates optimal truck routes across the USA. It intelligently identifies cost-effective fuel stops along the route, minimizing route deviation while maximizing fuel savings.
-🚀 Key FeaturesSmart 
-Routing: Uses OpenRouteService (ORS) to generate accurate driving geometries.
-Cost Optimization: selects gas stations based on a weighted score of Fuel Price vs. Route Deviation.
-High Performance:Uses Scikit-learn BallTree for spatial indexing ($O(\log n)$ search).
-Implements NumPy Vectorization to calculate route projections in milliseconds, replacing slow iterative loops.
-Visual Output: Generates interactive Folium (Leaflet) maps showing the route, stops, and prices.
-Financial Estimates: Calculates total trip distance, fuel consumption (Gallons), and total cost based on MPG.
+# Fuel Route Optimizer API
 
-🛠️ Architecture & Optimization
-This project solves the "Point-to-Curve" distance problem efficiently.
-Data Loading: Upon server start, thousands of truck stops are loaded into a BallTree structure for rapid radius querying.
-Vectorized Projection: Instead of iterating through route segments one by one, the algorithm utilizes NumPy broadcasting to project potential fuel stops onto hundreds of route segments simultaneously.
-Result: Reduces calculation time from seconds to milliseconds per request.
-Route Simplification: Uses geometry simplification strategies to reduce API payload size without sacrificing accuracy.
+Una API REST de alto rendimiento construida con **Django** que calcula rutas óptimas para camiones en todo Estados Unidos. Identifica estratégicamente los mejores puntos de carga de combustible según precio y desviación mínima de la ruta.
 
-📋 Prerequisites
-Python 3.8+
-OpenRouteService API Key (Free tier available)
-A CSV dataset of truck stops (truckstops_geocoded.csv) containing latitude, longitude, and Retail Price.
+---
 
-⚙️ Installation
-Clone the repository
+## Características Principales
+
+- **Smart Routing:** Utiliza **OpenRouteService (ORS)** para generar geometrías de manejo precisas.  
+- **Optimización de Costos:** Selección de estaciones basada en una puntuación ponderada entre *precio del combustible* y *desviación de la ruta*.  
+- **Alto Rendimiento:**  
+  - Índice espacial **BallTree (O(log n))** para consultas rápidas.  
+  - **Vectorización con NumPy** para calcular proyecciones sobre la ruta en milisegundos (reemplaza loops lentos).  
+- **Salida Visual:** Genera mapas interactivos con **Folium (Leaflet)** mostrando ruta, paradas y precios.  
+- **Estimaciones Financieras:** Cálculo de distancia total, consumo de combustible (galones) y costo estimado según MPG.  
+
+---
+
+## Arquitectura & Optimizaciones
+
+Este proyecto resuelve eficientemente el problema **“Point-to-Curve Distance”**.
+
+### 🔧 Procesos Internos
+
+- **Carga de Datos:** Al iniciar el servidor, miles de estaciones se cargan en un BallTree para consultas rápidas por radio.
+- **Proyección Vectorizada:**  
+  El algoritmo usa broadcasting de NumPy para proyectar estaciones sobre *cientos* de segmentos de ruta simultáneamente.  
+  **Resultado:** tiempo de cálculo → *de segundos a milisegundos*.
+- **Simplificación de Ruta:** Se reduce el tamaño de la geometría sin perder precisión, optimizando payloads y procesamiento.
+
+---
+
+## 📋 Requisitos
+
+- Python **3.8+**
+- **OpenRouteService API Key** (el plan gratuito funciona)
+- Dataset de estaciones de combustible:  
+  `datasets/truckstops_geocoded.csv`  
+  (debe incluir latitud, longitud y Retail Price)
+
+---
+
+## ⚙️ Instalación
+
+```bash
+# Clonar el repositorio
 git clone https://github.com/tomasgentilee/challenge_spotterai.git
+```
 
-Create a Virtual Environment
+```bash
+# Crear entorno virtual
 python -m venv venv
 venv\Scripts\activate
+```
 
-Install Dependencies
+```bash
+# Instalar dependencias
 pip install -r requirements.txt
+```
 
-Environment Setup
-Create a .env file in the root directory:
+### 🔑 Variables de Entorno
+
+Crear un archivo **.env** en la raíz del proyecto:
+
 ORS_API_KEY=your_open_route_service_key_here
 DEBUG=True
 SECRET_KEY=your_django_secret_key
 
-Dataset
-Ensure your dataset is placed at:./datasets/truckstops_geocoded.csv
+---
 
-Run the Server
+## 📦 Dataset
+
+Asegurarse de que el dataset esté ubicado en:
+
+./datasets/truckstops_geocoded.csv
+
+---
+
+## ▶️ Ejecutar el Servidor
+
+Iniciar el servidor Django:
+
+```bash
 python manage.py runserver
+```
 
-🔌 API Usage
-Endpoint: POST /api/generate-route/Request Body:JSON{
-    "origin": "Los Angeles, CA",
-    "destination": "New York, NY"
-}
+---
 
-Response:
+## 🔌 Uso de la API
+**Endpoint**
 
-JSON
+POST /api/generate-route/
+
+Request (JSON)
+
 {
-    "route_summary": {
-        "origin": "Los Angeles, CA",
-        "destination": "New York, NY",
-        "total_distance_miles": 2795.4,
-        "total_fuel_gallons": 279.54,
-        "total_fuel_cost": 1050.25,
-        "average_price_paid": 3.75
-    },
-    "stops": [
-        {
-            "Truckstop Name": "Example Travel Center",
-            "City": "Flagstaff",
-            "State": "AZ",
-            "Retail Price": 3.65,
-            "deviation_km": 0.5,
-            "latitude": 35.19,
-            "longitude": -111.65
-        }
-        // ... more stops
-    ],
-    "map_url": "/media/maps/route_a1b2c3d4.html"
+  "origin": "Los Angeles, CA",
+  "destination": "New York, NY",
 }
 
-🗺️ Visualization ExampleThe API returns a link to an HTML file generated by Folium.
-🟢 Green Marker: Origin
-🔴 Red Marker: Destination
-⛽ Orange Markers: Optimized Fuel Stops (Popup shows price & deviation)
-🔵 Blue Line: Calculated Route
+Response (Ejemplo)
+
+{
+  "route_summary": {
+    "origin": "Los Angeles, CA",
+    "destination": "New York, NY",
+    "total_distance_miles": 2795.4,
+    "total_fuel_gallons": 279.54,
+    "total_fuel_cost": 1050.25,
+    "average_price_paid": 3.75
+  },
+  "stops": [
+    {
+      "Truckstop Name": "Example Travel Center",
+      "City": "Flagstaff",
+      "State": "AZ",
+      "Retail Price": 3.65,
+      "deviation_km": 0.5,
+      "latitude": 35.19,
+      "longitude": -111.65
+    }
+    // ... más paradas
+  ],
+  "map_url": "/media/maps/route_a1b2c3d4.html"
+}
+
+---
+
+## Visualización
+
+La API genera y almacena un archivo HTML (Folium) con el mapa interactivo:
+
+🟢 Verde: Origen
+
+🔴 Rojo: Destino
+
+⛽ Naranja: Paradas de combustible optimizadas (popup: precio y desviación)
+
+🔵 Azul: Ruta calculada
+
+map_url apunta al archivo HTML dentro de MEDIA_ROOT (ej. /media/maps/route_*.html).
