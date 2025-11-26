@@ -88,7 +88,7 @@ python manage.py runserver
 
 ---
 
-## 🔌 Uso de la API
+## Uso de la API
 **Endpoint**
 
 POST /api/generate-route/
