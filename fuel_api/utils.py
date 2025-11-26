@@ -3,15 +3,6 @@ import numpy as np
 from math import radians, cos, sin, sqrt, atan2
 from sklearn.neighbors import BallTree
 import requests
-from openrouteservice import Client, convert   # ya no usamos optimization
-from decouple import config
-
-import pandas as pd
-import numpy as np
-from math import radians, cos, sin, sqrt, atan2
-from sklearn.neighbors import BallTree
-import requests
-from openrouteservice import Client
 from decouple import config
 
 # ---------------------------
