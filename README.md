@@ -62,9 +62,11 @@ pip install -r requirements.txt
 
 Crear un archivo **.env** en la raíz del proyecto:
 
+```bash
 ORS_API_KEY=your_open_route_service_key_here
 DEBUG=True
 SECRET_KEY=your_django_secret_key
+```
 
 ---
 
@@ -91,15 +93,18 @@ python manage.py runserver
 
 POST /api/generate-route/
 
-Request (JSON)
+**Request (JSON)**
 
+```bash
 {
   "origin": "Los Angeles, CA",
   "destination": "New York, NY",
 }
+```
 
-Response (Ejemplo)
+**Response (Ejemplo)**
 
+```bash
 {
   "route_summary": {
     "origin": "Los Angeles, CA",
@@ -123,6 +128,7 @@ Response (Ejemplo)
   ],
   "map_url": "/media/maps/route_a1b2c3d4.html"
 }
+```
 
 ---
 
